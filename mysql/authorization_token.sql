@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `device_tree`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `device_tree` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `token` char(32) NOT NULL,
+  `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'integer uid for token query',
+  `token` char(32) NOT NULL COMMENT 'md5 hash value of the hardward signature info',
   `device_name` varchar(128) DEFAULT NULL,
   `register_time` datetime NOT NULL,
   `note` tinytext,
@@ -51,14 +51,16 @@ DROP TABLE IF EXISTS `neural_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `neural_tokens` (
-  `uid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL COMMENT 'integer uid for token query',
   `t1` int(11) NOT NULL,
   `t2` int(11) NOT NULL,
   `t3` int(11) NOT NULL,
   `t4` int(11) NOT NULL,
   `t5` int(11) NOT NULL,
-  `key` int(11) NOT NULL,
-  PRIMARY KEY (`uid`)
+  `key` int(11) NOT NULL COMMENT 'index of the t1 or t2 or t3 or t4 or t5, ann result',
+  `user` int(11) NOT NULL COMMENT 'user id',
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,7 +83,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `uid` int(11) NOT NULL,
   `email` varchar(128) NOT NULL,
-  `root_device` int(11) NOT NULL,
+  `root_device` int(11) NOT NULL COMMENT 'The first device that user register on the platform, this property point to the device_tree table uid.',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -104,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-22 20:04:58
+-- Dump completed on 2016-07-22 21:26:43
