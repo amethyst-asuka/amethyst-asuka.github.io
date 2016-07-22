@@ -69,6 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelAPI.vb" />
     <Compile Include="Server.vb" />
     <Compile Include="Models\device_tree.vb" />
     <Compile Include="Models\neural_tokens.vb" />

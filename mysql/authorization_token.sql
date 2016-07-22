@@ -30,8 +30,9 @@ CREATE TABLE `device_tree` (
   `device_name` varchar(128) DEFAULT NULL,
   `register_time` datetime NOT NULL,
   `note` tinytext,
+  `parent` int(11) NOT NULL COMMENT 'parent uid in this tree, root device is -1',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +41,7 @@ CREATE TABLE `device_tree` (
 
 LOCK TABLES `device_tree` WRITE;
 /*!40000 ALTER TABLE `device_tree` DISABLE KEYS */;
+INSERT INTO `device_tree` VALUES (3,'9d3331d090b87f01d0f167cf5591ef9c','DESKTOP-5L1QPEN','2016-07-22 23:10:50','Microsoft Windows NT 6.2.9200.0',-1),(4,'9d3331d090b87f01d0f167cf5591ef9c','DESKTOP-5L1QPEN','2016-07-22 23:12:50','Microsoft Windows NT 6.2.9200.0',-1),(5,'9d3331d090b87f01d0f167cf5591ef9c','DESKTOP-5L1QPEN','2016-07-22 23:15:19','Microsoft Windows NT 6.2.9200.0',-1),(6,'9d3331d090b87f01d0f167cf5591ef9c','DESKTOP-5L1QPEN','2016-07-22 23:18:58','Microsoft Windows NT 6.2.9200.0',-1),(7,'9d3331d090b87f01d0f167cf5591ef9c','DESKTOP-5L1QPEN','2016-07-22 23:20:06','Microsoft Windows NT 6.2.9200.0',-1);
 /*!40000 ALTER TABLE `device_tree` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +53,7 @@ DROP TABLE IF EXISTS `neural_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `neural_tokens` (
-  `uid` int(11) NOT NULL COMMENT 'integer uid for token query',
+  `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'integer uid for token query',
   `t1` int(11) NOT NULL,
   `t2` int(11) NOT NULL,
   `t3` int(11) NOT NULL,
@@ -81,11 +83,11 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `uid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(128) NOT NULL,
   `root_device` int(11) NOT NULL COMMENT 'The first device that user register on the platform, this property point to the device_tree table uid.',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,6 +96,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'amethyst.asuka@gcmodeller.org',7);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +109,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-22 21:26:43
+-- Dump completed on 2016-07-22 23:20:59
