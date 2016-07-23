@@ -52,6 +52,16 @@ Public Class NeuronTest
         Dim hn As Integer = result.Count / 2
         Dim testResult As Boolean = nT >= hn
 
+        If testResult = True Then  ' update database when success
+            For i As Integer = 0 To token.Length - 1
+                If result(i) Then
+                    Dim write As Storage.MySql.neural_tokens =
+                        token(i).NewToken(token(i).key, user)
+                    Call __server.MySql.ExecInsert(write)
+                End If
+            Next
+        End If
+
         Return testResult
     End Function
 
