@@ -117,32 +117,30 @@ Module EnCodes
         For i As Integer = 0 To 9
             m = Regex.Match(n, i & "{2,}").Value
             If Not String.IsNullOrEmpty(m) Then
-                rs += m
+                If m.Length = n.Length Then
+                    Return NumProperties.AllRepeats + CInt(CStr(n.First)).Type
+                Else
+                    rs += m
+                End If
             End If
         Next
 
-        If rs.Count = 0 Then
-            Return 0
+        If rs.Count = 0 Then Return 0
+
+        Dim first As New Value(Of String)
+        Dim ml As String
+
+        If rs.Count = 1 Then
+            ml = first
         Else
-            Dim first As New Value(Of String)
-            Dim ml As String
-
-            If rs.Count = 1 Then
-                If (first = rs.First).Length = n.Length Then
-                    Return NumProperties.AllRepeats + CInt(CStr(first.value.First)).Type
-                Else
-                    ml = first
-                End If
-            Else
-                ml = LinqAPI.DefaultFirst(Of String) <=
-                    From x As String
-                    In rs
-                    Select x
-                    Order By x.GetLength Descending   ' 只按照最长的那个来计算
-            End If
-
-            Return NumProperties.Repeats + CInt(CStr(first.value.First)).Type
+            ml = LinqAPI.DefaultFirst(Of String) <=
+                From x As String
+                In rs
+                Select x
+                Order By x.GetLength Descending   ' 只按照最长的那个来计算
         End If
+
+        Return NumProperties.Repeats + CInt(CStr(first.value.First)).Type
     End Function
 
     ''' <summary>
