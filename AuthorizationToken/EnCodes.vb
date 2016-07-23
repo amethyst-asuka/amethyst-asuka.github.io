@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 Imports Microsoft.VisualBasic.Language
 
 Module EnCodes
@@ -35,13 +36,13 @@ Module EnCodes
         ''' </summary>
         AllRepeats = 256
         ''' <summary>
-        ''' 以什么数字结束
-        ''' </summary>
-        EndWith = 512
-        ''' <summary>
         ''' 组成最多的
         ''' </summary>
-        MostComposition = 1024
+        MostComposition = 512
+        ''' <summary>
+        ''' 以什么数字结束
+        ''' </summary>
+        EndWith = 1024
 
         ''' <summary>
         ''' 质数
@@ -57,8 +58,54 @@ Module EnCodes
         Odd = 8192
     End Enum
 
+    Public ReadOnly Property Maps As Encoder(Of NumProperties) = GetEncoder()
+
+    Public Function GetEncoder() As Encoder(Of NumProperties)
+        Dim maps As New Encoder(Of NumProperties)
+        Dim array As NumProperties() = {
+            NumProperties.Repeats + NumProperties.SquareNumber,
+            NumProperties.Repeats + NumProperties.TriangularNumber,
+            NumProperties.Repeats + NumProperties.RectangleNumber,
+            NumProperties.Repeats + NumProperties.N5,
+            NumProperties.Repeats + NumProperties.N7,
+            NumProperties.Repeats + NumProperties.N8,
+ _
+            NumProperties.AllRepeats + NumProperties.SquareNumber,
+            NumProperties.AllRepeats + NumProperties.TriangularNumber,
+            NumProperties.AllRepeats + NumProperties.RectangleNumber,
+            NumProperties.AllRepeats + NumProperties.N5,
+            NumProperties.AllRepeats + NumProperties.N7,
+            NumProperties.AllRepeats + NumProperties.N8,
+ _
+            NumProperties.MostComposition + NumProperties.SquareNumber,
+            NumProperties.MostComposition + NumProperties.TriangularNumber,
+            NumProperties.MostComposition + NumProperties.RectangleNumber,
+            NumProperties.MostComposition + NumProperties.N5,
+            NumProperties.MostComposition + NumProperties.N7,
+            NumProperties.MostComposition + NumProperties.N8,
+ _
+            NumProperties.EndWith + NumProperties.SquareNumber,
+            NumProperties.EndWith + NumProperties.TriangularNumber,
+            NumProperties.EndWith + NumProperties.RectangleNumber,
+            NumProperties.EndWith + NumProperties.N5,
+            NumProperties.EndWith + NumProperties.N7,
+            NumProperties.EndWith + NumProperties.N8
+        }
+        Dim d As Double = 1 / array.Length
+        Dim o As Double = 0R
+
+        d += (d / array.Length)
+
+        For Each x As NumProperties In array
+            maps(x) = o
+            o += d
+        Next
+
+        Return maps
+    End Function
+
     <Extension>
-    Public Function Transform(n As Long) As Double
+    Public Function Transform(n As Long) As NumProperties
         Dim s As String = CStr(n)
         Dim p As NumProperties
 

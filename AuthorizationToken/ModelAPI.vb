@@ -18,11 +18,11 @@ Module ModelAPI
     Public Function NewToken(test As neural_tokens, index As Integer, user As Long) As Storage.MySql.neural_tokens
         Return New Storage.MySql.neural_tokens With {
             .key = index,
-            .t1 = test.t1,
-            .t2 = test.t2,
-            .t3 = test.t3,
-            .t4 = test.t4,
-            .t5 = test.t5,
+            .t1 = test.t1.Transform,
+            .t2 = test.t2.Transform,
+            .t3 = test.t3.Transform,
+            .t4 = test.t4.Transform,
+            .t5 = test.t5.Transform,
             .user = user
         }
     End Function
@@ -34,17 +34,28 @@ Module ModelAPI
 
     <Extension>
     Public Function ToArray(x As neural_tokens) As Double()
-        Return New Double() {x.t1, x.t2, x.t3, x.t4, x.t5}
+        Return New Double() {
+            x.t1.Transform,
+            x.t2.Transform,
+            x.t3.Transform,
+            x.t4.Transform,
+            x.t5.Transform
+        }
     End Function
 
+    ''' <summary>
+    ''' 返回的值是已经被编码过的
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetValue(x As Storage.MySql.neural_tokens) As Double
         Select Case x.key
-            Case 0 : Return x.t1
-            Case 1 : Return x.t2
-            Case 2 : Return x.t3
-            Case 3 : Return x.t4
-            Case 4 : Return x.t5
+            Case 0 : Return Maps(x.t1)
+            Case 1 : Return Maps(x.t2)
+            Case 2 : Return Maps(x.t3)
+            Case 3 : Return Maps(x.t4)
+            Case 4 : Return Maps(x.t5)
             Case Else
                 Throw New Exception(x.GetJson)
         End Select
