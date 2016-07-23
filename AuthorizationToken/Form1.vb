@@ -28,17 +28,21 @@ Public Class Form1
 
         test.key = test.IndexOf(index)
 
-        If n > -1 Then
-            testTokens += test
-            n -= 1
-        Else
-            n = 5
-            MsgBox(New NeuronTest(server).Test(testTokens, 2))
-            testTokens.Clear()
-        End If
+        '     If n > -1 Then
+        '   testTokens += test
+        '    n -= 1
+        '   Else
+        '  n = 5
+        '   MsgBox(New NeuronTest(server).Test(testTokens, 2))
+        '  testTokens.Clear()
+        '  End If
 
-        '   Dim data = test.NewToken(test.IndexOf(index), 2)
-        '  Call server.MySql.ExecInsert(data)
+        Dim data = test.NewToken(test.IndexOf(index), 2)
+        Call server.MySql.ExecInsert(data)
+        Call Button6_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call Button6_Click(Nothing, Nothing)
     End Sub
 End Class

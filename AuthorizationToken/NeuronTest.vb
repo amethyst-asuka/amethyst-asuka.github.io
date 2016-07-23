@@ -5,6 +5,12 @@ Imports Microsoft.VisualBasic
 ''' <summary>
 ''' Using neuron network to test a authorization.
 ''' </summary>
+''' <remarks>
+''' 质数: 质数（prime number）又称素数，有无限个。除了1和它本身以外不再被其他的除数整除。
+''' 偶数: 所有整数不是奇数（单数），就是偶数（双数）。若某数是2的倍数，它就是偶数（双数），可表示为2n；
+''' 奇数: 若某数不是2的倍数，它就是奇数（单数），可表示为2n+1（n为整数），即奇数（单数）除以二的余数是一
+''' 重复数: 数字之中某一个数多次重复出现
+''' </remarks>
 Public Class NeuronTest
 
     ReadOnly __server As Server
